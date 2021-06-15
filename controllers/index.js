@@ -5,9 +5,9 @@ const HomeCountry = require("../models/homeCountry");
 
 const createAirline = async (req, res) => {
   try {
-    const brand = await new AirlineCompany(req.body);
-    await brand.save();
-    return res.status(201).json({ brand });
+    const airline = await new AirlineCompany(req.body);
+    await airline.save();
+    return res.status(201).json({ airline });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -15,8 +15,8 @@ const createAirline = async (req, res) => {
 
 const getAllAirline = async (req, res) => {
   try {
-    const brands = await AirlineCompany.find();
-    return res.status(200).json({ brands });
+    const airlines = await AirlineCompany.find();
+    return res.status(200).json({ airlines });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
@@ -25,11 +25,11 @@ const getAllAirline = async (req, res) => {
 const getAirlineById = async (req, res) => {
   try {
     const { id } = req.params;
-    const brand = await AirlineCompany.findById(id);
-    if (brand) {
-      return res.status(200).json({ brand });
+    const airline = await AirlineCompany.findById(id);
+    if (airline) {
+      return res.status(200).json({ airline });
     }
-    return res.status(404).send("car brand not found");
+    return res.status(404).send("airline not found");
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -42,14 +42,14 @@ const updateAirline = async (req, res) => {
       id,
       req.body,
       { new: true },
-      (err, brand) => {
+      (err, airline) => {
         if (err) {
           res.status(500).send(err)
         }
-        if (!brand) {
-          res.status(500).send("car brand not found")
+        if (!airline) {
+          res.status(500).send("airline not found")
         }
-        return res.status(200).json(brand);
+        return res.status(200).json(airline);
       }
     );
   } catch (error) {
@@ -62,9 +62,9 @@ const deleteAirline = async (req, res) => {
     const { id } = req.params;
     const deleted = await AirlineCompany.findByIdAndDelete(id);
     if (deleted) {
-      return res.status(200).send("car brand deleted");
+      return res.status(200).send("airline deleted");
     }
-    throw new Error("car brand not found");
+    throw new Error("airline not found");
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -74,8 +74,8 @@ const deleteAirline = async (req, res) => {
 const getArlinesByCountry = async (req, res) => {
   try {
     const { id } = req.params;
-    const cars = await HomeCountry.find({ car_brand: id });
-    return res.status(200).json({ cars });
+    const countries = await HomeCountry.find({ car_brand: id });
+    return res.status(200).json({ countries });
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -84,9 +84,9 @@ const getArlinesByCountry = async (req, res) => {
 
 const createHomeCountry = async (req, res) => {
   try {
-    const car = await new HomeCountry(req.body);
+    const country = await new HomeCountry(req.body);
     await car.save();
-    return res.status(201).json({ car });
+    return res.status(201).json({ country });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -95,8 +95,8 @@ const createHomeCountry = async (req, res) => {
 
 const getAllHomeCountry = async (req, res) => {
   try {
-    const cars = await HomeCountry.find();
-    return res.status(200).json({ cars });
+    const country = await HomeCountry.find();
+    return res.status(200).json({ country });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
@@ -110,7 +110,7 @@ const getHomeCountryById = async (req, res) => {
     if (car) {
       return res.status(200).json({ car });  
     }
-    return res.status(404).send("car not found");
+    return res.status(404).send("country not found");
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -129,7 +129,7 @@ const updateHomeCountry = async (req, res) => {
           res.status(500).send(err)
         }
         if (!car) {
-          res.status(500).send("car not found")
+          res.status(500).send("country not found")
         }
         return res.status(200).json(car);
       }
@@ -145,9 +145,9 @@ const deleteHomeCountry = async (req, res) => {
     const { id } = req.params;
     const deleted = await HomeCountry.findByIdAndDelete(id);
     if (deleted) {
-      return res.status(200).send("car deleted");
+      return res.status(200).send("country deleted");
     }
-    throw new Error("car not found");
+    throw new Error("country not found");
   } catch (error) {
     return res.status(500).send(error.message);
   }
